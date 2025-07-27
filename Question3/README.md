@@ -44,7 +44,7 @@ The following are the **renamed clauses** in this function:
 
 Finally, The `isEligible` function contains the following **predicates**:
 
-``` prolog
+``` text
 P1 = a & b & c & d & e
 P2 = f & g & h
 P3 = i & j & k & l
@@ -63,18 +63,15 @@ Here is the corresponding row number for each predicate.
 - #Row for P1 = {9, 24}
   - a = T, b = F, c = T, d = T, e = T
   - a = F, b = T, c = F, d = F, e = F
-- #Row for P2 = {1, 32}
-  - a = T, b = F, c = T, d = T, e = T
-  - a = F, b = T, c = F, d = F, e = F
-- #Row for P3 = {1, 32}
-  - a = T, b = F, c = T, d = T, e = T
-  - a = F, b = T, c = F, d = F, e = F
-- #Row for P4 = {1, 32}
-  - a = T, b = F, c = T, d = T, e = T
-  - a = F, b = T, c = F, d = F, e = F
-- #Row for P5 = {1, 32}
-  - a = T, b = F, c = T, d = T, e = T
-  - a = F, b = T, c = F, d = F, e = F
+- #Row for P2 = {1, 9}
+  - f = T, g = T, h = T
+  - f = F, g = F, h = F
+- #Row for P3 = {6, 11}
+  - i = T, j = F, k = T, l = F
+  - i = F, j = T, k = F, l = T
+- #Row for P4 = {2, 7}
+  - m = T, n = T, o = F
+  - m = F, n = F, o = T
 
 Based on these rows, the corresponding test case values are as follows (× = don't care):
 
@@ -82,11 +79,9 @@ Based on these rows, the corresponding test case values are as follows (× = don
 |:---------:|:-----------:|:------:|:----------:|:-------------:|:----------------:|:-----------------:|
 | TC1 (P1)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
 | TC2 (P1)  | 200         | -100   | -1000      | true (×)      | 0                | true (×)          |
-| TC3 (P2)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC4 (P2)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC5 (P3)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC6 (P3)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC7 (P4)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC8 (P4)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC9 (P5)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
-| TC10 (P5) | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
+| TC3 (P2)  | 700         | 50000  | 50000      | true (×)      | 24 (×)           | true (×)          |
+| TC4 (P2)  | 600         | 40000  | 40000      | true (×)      | 24 (×)           | true (×)          |
+| TC5 (P3)  | 650         | 30000  | 30000      | true (×)      | 24 (×)           | false             |
+| TC6 (P3)  | 600         | 60000  | 45000      | true (×)      | 24 (×)           | true              |
+| TC7 (P4)  | 600         | 100 (×)| 10000 (×)  | true          | 30               | true (×)          |
+| TC8 (P4)  | 100         | 100 (×)| 10000 (×)  | false         | 12               | true (×)          |
