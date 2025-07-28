@@ -56,7 +56,7 @@ P = {P1, P2, P3, P4}
 
 ### Clause Coverage
 
-**Clause Coverage** (CC): For  all p in P for each c in Cp, TR contains two requirements: c evaluates to true, and c evaluates to false.
+*Clause Coverage* (CC): For  all p in P for each c in Cp, TR contains two requirements: c evaluates to true, and c evaluates to false.
 
 Here is the corresponding row number for each predicate.
 
@@ -85,3 +85,62 @@ Based on these rows, the corresponding test case values are as follows (× = don
 | TC6 (P3)  | 600         | 60000  | 45000      | true (×)      | 24 (×)           | true              |
 | TC7 (P4)  | 600         | 100 (×)| 10000 (×)  | true          | 30               | true (×)          |
 | TC8 (P4)  | 100         | 100 (×)| 10000 (×)  | false         | 12               | true (×)          |
+
+### Correlated Active Clause Coverage
+
+*Correlated Active Clause Coverage* (CACC): For each p in P and each major clause ci in Cp, choose minor clauses cj,  j != i, so that ci determines p.
+TR has two requirements for each ci:
+
+- ci evaluates to true
+- ci evaluates to false.  
+
+The values chosen for the minor clauses cj must cause p to be true for one value of the major clause ci and false for the other.
+
+In this question, all predicates consist of a series of operands connected by AND operators.
+Therefore, each clause is active when all other clauses in the predicate are true.
+Below is the corresponding test requirement for each predicate.
+
+- #Row for P1 = {1, 2, 3, 5, 9, 17}
+  - a = T, b = T, c = T, d = T, e = T
+  - a = T, b = T, c = T, d = T, **e = F**
+  - a = T, b = T, c = T, **d = F**, e = T
+  - a = T, b = T, **c = F**, d = T, e = T
+  - a = T, **b = F**, c = T, d = T, e = T
+  - **a = F**, b = T, c = T, d = T, e = T
+- #Row for P2 = {1, 2, 3, 5}
+  - f = T, g = T, h = T
+  - f = T, g = T, **h = F**
+  - f = T, **g = F**, h = T
+  - **f = F**, g = T, h = T
+- #Row for P3 = {1, 2, 3, 5, 9}
+  - i = T, j = T, k = T, l = T
+  - i = T, j = T, k = T, **l = F**
+  - i = T, j = T, **k = F**, l = T
+  - i = T, **j = T**, k = T, l = T
+  - **i = T**, j = T, k = T, l = T
+- #Row for P4 = {1, 2, 3, 5, 9}
+  - m = T, n = T, o = T
+  - m = T, n = T, **o = F**
+  - m = T, **n = F**, o = T
+  - **m = F**, n = T, o = T
+
+Based on these rows, the corresponding test case values are as follows (× = don't care):
+
+| Test Case | creditScore | income | loanAmount | hasGuarantor  | repaymentMonths  | employmentStable  |
+|:---------:|:-----------:|:------:|:----------:|:-------------:|:----------------:|:-----------------:|
+| TC1 (P1)  | 500         | 1000   | 10000      | true (×)      | 24               | true (×)          |
+| TC2 (P1)  | 200         | 1000   | 10000      | true (×)      | 24               | true (×)          |
+| TC3 (P1)  | 900         | 1000   | 10000      | true (×)      | 24               | true (×)          |
+| TC4 (P1)  | 500         | -10    | 10000      | true (×)      | 24               | true (×)          |
+| TC5 (P1)  | 500         | 1000   | 0          | true (×)      | 24               | true (×)          |
+| TC6 (P1)  | 500         | 1000   | 10000      | true (×)      | 0                | true (×)          |
+| TC7 (P2)  | 700         | 50000  | 50000      | true (×)      | 24 (×)           | true (×)          |
+| TC8 (P2)  | 600         | 50000  | 50000      | true (×)      | 24 (×)           | true (×)          |
+| TC9 (P2)  | 700         | 40000  | 50000      | true (×)      | 24 (×)           | true (×)          |
+| TC10 (P2) | 700         | 50000  | 60000      | true (×)      | 24 (×)           | true (×)          |
+| TC11 (P3) | 700         | 50000  | 60000      | true (×)      | 24 (×)           | true (×)          |
+
+| i      | creditScore >= 650       |
+| j      | income >= 60000          |
+| k      | loanAmount <= 40000      |
+| l      | employmentStable = true  |
