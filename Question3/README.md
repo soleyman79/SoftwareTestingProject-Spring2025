@@ -138,9 +138,67 @@ Based on these rows, the corresponding test case values are as follows (× = don
 | TC8 (P2)  | 600         | 50000  | 50000      | true (×)      | 24 (×)           | true (×)          |
 | TC9 (P2)  | 700         | 40000  | 50000      | true (×)      | 24 (×)           | true (×)          |
 | TC10 (P2) | 700         | 50000  | 60000      | true (×)      | 24 (×)           | true (×)          |
-| TC11 (P3) | 700         | 50000  | 60000      | true (×)      | 24 (×)           | true (×)          |
+| TC11 (P3) | 700         | 60000  | 40000      | true (×)      | 24 (×)           | true              |
+| TC12 (P3) | 600         | 60000  | 40000      | true (×)      | 24 (×)           | true              |
+| TC13 (P3) | 700         | 50000  | 40000      | true (×)      | 24 (×)           | true              |
+| TC14 (P3) | 700         | 60000  | 50000      | true (×)      | 24 (×)           | true              |
+| TC15 (P3) | 700         | 60000  | 40000      | true (×)      | 24 (×)           | false             |
+| TC15 (P3) | 600         | 600 (x)| 40000 (x)  | true          | 12               | false (x)         |
+| TC16 (P3) | 500         | 600 (x)| 40000 (x)  | true          | 12               | false (x)         |
+| TC17 (P3) | 600         | 600 (x)| 40000 (x)  | false         | 12               | false (x)         |
+| TC18 (P3) | 600         | 600 (x)| 40000 (x)  | true          | 32               | false (x)         |
 
-| i      | creditScore >= 650       |
-| j      | income >= 60000          |
-| k      | loanAmount <= 40000      |
-| l      | employmentStable = true  |
+### MUMCUT
+
+*MUMCUT* Given a minimal DNF representation of a predicate f, apply MUTP, CUTPNFP, and MNFP.
+
+The corresponding test case values are as follows:
+
+| TC  | Term | Case Type | creditScore | income | loanAmount | hasGuarantor | repaymentMonths | employmentStable | Expected |
+| --- | ---- | --------- | ----------- | ------ | ---------- | ------------ | --------------- | ---------------- | -------- |
+| TC1 | T1   | MUTP      | 720         | 60000  | 40000      | false        | 30              | false            | true     |
+| TC2 | T1   | CUTPNFP   | 690         | 60000  | 40000      | false        | 30              | false            | false    |
+| TC3 | T1   | CUTPNFP   | 720         | 40000  | 40000      | false        | 30              | false            | false    |
+| TC4 | T1   | CUTPNFP   | 720         | 60000  | 60000      | false        | 30              | false            | false    |
+| TC5 | T1   | MNFP      | 720         | 60000  | 60000      | true         | 12              | true             | true     |
+
+| TC   | Term | Case Type | creditScore | income | loanAmount | hasGuarantor | repaymentMonths | employmentStable | Expected |
+| ---- | ---- | --------- | ----------- | ------ | ---------- | ------------ | --------------- | ---------------- | -------- |
+| TC6  | T2   | MUTP      | 660         | 70000  | 30000      | false        | 30              | true             | true     |
+| TC7  | T2   | CUTPNFP   | 640         | 70000  | 30000      | false        | 30              | true             | false    |
+| TC8  | T2   | CUTPNFP   | 660         | 50000  | 30000      | false        | 30              | true             | false    |
+| TC9  | T2   | CUTPNFP   | 660         | 70000  | 50000      | false        | 30              | true             | false    |
+| TC10 | T2   | CUTPNFP   | 660         | 70000  | 30000      | false        | 30              | false            | false    |
+| TC11 | T2   | MNFP      | 660         | 70000  | 30000      | true         | 12              | false            | true     |
+
+| TC   | Term | Case Type | creditScore | income | loanAmount | hasGuarantor | repaymentMonths | employmentStable | Expected |
+| ---- | ---- | --------- | ----------- | ------ | ---------- | ------------ | --------------- | ---------------- | -------- |
+| TC12 | T3   | MUTP      | 620         | 10000  | 20000      | true         | 12              | false            | true     |
+| TC13 | T3   | CUTPNFP   | 590         | 10000  | 20000      | true         | 12              | false            | false    |
+| TC14 | T3   | CUTPNFP   | 620         | 10000  | 20000      | false        | 12              | false            | false    |
+| TC15 | T3   | CUTPNFP   | 620         | 10000  | 20000      | true         | 30              | false            | false    |
+| TC16 | T3   | MNFP      | 620         | 10000  | 20000      | true         | 30              | true             | true     |
+
+### All Uses Coverage
+
+Here are the DU-pairs:
+
+| Variable           | Definition Location         | Use Location                                   |
+| ------------------ | --------------------------- | ---------------------------------------------- |
+| `creditScore`      | constructor / updateRequest | `LoanApproval.isEligible`, `creditScore < 600` |
+| `income`           | constructor / updateRequest | `LoanApproval.isEligible`                      |
+| `loanAmount`       | constructor                 | `LoanApproval.isEligible`                      |
+| `hasGuarantor`     | constructor                 | `LoanApproval.isEligible`, `!hasGuarantor`     |
+| `repaymentMonths`  | constructor                 | `LoanApproval.isEligible`                      |
+| `employmentStable` | constructor                 | `LoanApproval.isEligible`                      |
+
+The corresponding test case values are as follows:
+
+| Test ID | creditScore | income | loanAmount | hasGuarantor | repaymentMonths | employmentStable | Expected Status       |
+| ------- | ----------- | ------ | ---------- | ------------ | --------------- | ---------------- | --------------------- |
+| TC1     | 750         | 60000  | 40000      | false        | 36              | false            | APPROVED              |
+| TC2     | 660         | 60000  | 40000      | false        | 36              | true             | APPROVED              |
+| TC3     | 620         | 30000  | 45000      | true         | 12              | false            | APPROVED              |
+| TC4     | 550         | 30000  | 40000      | false        | 36              | false            | REJECTED\_LOW\_CREDIT |
+| TC5     | 620         | 30000  | 60000      | false        | 36              | false            | PENDING               |
+
