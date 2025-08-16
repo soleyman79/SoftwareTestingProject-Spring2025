@@ -201,4 +201,3 @@ The corresponding test case values are as follows:
 | TC3     | 620         | 30000  | 45000      | true         | 12              | false            | APPROVED              |
 | TC4     | 550         | 30000  | 40000      | false        | 36              | false            | REJECTED\_LOW\_CREDIT |
 | TC5     | 620         | 30000  | 60000      | false        | 36              | false            | PENDING               |
-
