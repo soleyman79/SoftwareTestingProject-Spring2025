@@ -10,6 +10,8 @@ So each method needs a seprate CFG.
 
 Since each method may have distinct logic and execution paths, **a separate CFG is required for each method** in this question.
 
+There are two graphs for part two, one is simplified but still valid as a CFG. Another is the complete CFG.
+
 ---
 
 ### Method: `evaluateRequest`
